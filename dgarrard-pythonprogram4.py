@@ -65,14 +65,15 @@ class stock_frame(wx.Frame):
             
             
                 url = F"{finn}{d[1]}&token={api_key}"  # setup URL to ask for information using finn symbol & api key
-                
+
                 d = [*d]   # change tuple to a list
-                #print(url)
+                print(url)
                 req = requests.get(url)  #data request set to req
+                print(req.status_code) 
                 if req.status_code == 200:
                     data_2 = req.json()  #convert data to python dictionary
                     c = data_2['c']   # grab current price from dictionary and assign c
-            
+                    print(c)
                     stock_gain_loss = (c - d[2]) * d[3]   # calculate change in individual stock prices
 
                     c = f'{c:.2f}'   #convert variable c into float string with 2 decimal places
