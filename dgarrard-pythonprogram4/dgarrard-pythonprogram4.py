@@ -2,7 +2,12 @@ import sqlite3
 import wx
 import requests
 import datetime
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+api_key = os.getenv('FINNHUB_API_KEY')
 
 D = datetime.datetime.now()  #date and time as of now, set to global variable D
 date = D.strftime("%A %B %d, %Y : %H:%M")  #formats date to days of week, month, day, year, and 24hr time
@@ -52,16 +57,17 @@ class stock_frame(wx.Frame):
             total_gain_loss = 0
 
             finn = 'https://finnhub.io/api/v1/quote?symbol='
-            api_key = '&token=cvmo5jpr01ql90pv6rrgcvmo5jpr01ql90pv6rs0'
+
             cur.execute("SELECT company, symbol, purchase_price, shares FROM dow_stocks")  #execute SQL
             counter = 0        
             data = cur.fetchall()  #assign SQL information to data list
             for d in data:  #unpack each line of data to d tuple
             
             
-                url = finn + d[1] + api_key  # setup URL to ask for information using finn symbol & api key
+                url = F"{finn}{d[1]}&token={api_key}"  # setup URL to ask for information using finn symbol & api key
+
                 d = [*d]   # change tuple to a list
-            
+                #print(url)
                 req = requests.get(url)  #data request set to req
                 if req.status_code == 200:
                     data_2 = req.json()  #convert data to python dictionary
