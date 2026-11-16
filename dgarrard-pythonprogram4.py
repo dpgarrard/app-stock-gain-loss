@@ -10,7 +10,7 @@ load_dotenv()
 api_key = os.getenv('FINNHUB_API_KEY')
 
 if not api_key:
-    raise ValueError('Missing FINNHUB_API_KEY. Please create a .env file based on .env.example, and add your free finhubb api key.')
+    raise ValueError('Missing FINNHUB_API_KEY. Please create a .env file based on .env.example, and add your free Finhubb api key.')
 
 D = datetime.datetime.now()  #date and time as of now, set to global variable D
 date = D.strftime("%A %B %d, %Y : %H:%M")  #formats date to days of week, month, day, year, and 24hr time
