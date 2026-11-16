@@ -9,6 +9,9 @@ load_dotenv()
 
 api_key = os.getenv('FINNHUB_API_KEY')
 
+if not api_key:
+    raise ValueError('Missing FINNHUB_API_KEY. Please create a .env file based on .env.example, and add your free finhubb api key.')
+
 D = datetime.datetime.now()  #date and time as of now, set to global variable D
 date = D.strftime("%A %B %d, %Y : %H:%M")  #formats date to days of week, month, day, year, and 24hr time
 
@@ -69,7 +72,7 @@ class stock_frame(wx.Frame):
                 d = [*d]   # change tuple to a list
                 print(url)
                 req = requests.get(url)  #data request set to req
-                print(req.status_code) 
+                print(req.status_code)
                 if req.status_code == 200:
                     data_2 = req.json()  #convert data to python dictionary
                     c = data_2['c']   # grab current price from dictionary and assign c
